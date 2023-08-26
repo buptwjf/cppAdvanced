@@ -22,7 +22,7 @@ mutex mtx; // 一把全局的互斥锁
 void sellTicket(int index) {
     while (ticketCount >= 1) {
         mtx.lock();  // 加锁
-        if (ticketCount >= 1) {
+        if (ticketCount >= 1) { // 双重判定
             // 临界区代码段 => 原子操作 => 线程间互斥操作 => mutex
             cout << "Window: " << index << " sells  No." << ticketCount << "ticket" << endl;
             ticketCount--;
@@ -36,15 +36,16 @@ void sellTicket(int index) {
 void sellTicket1(int index) {
     while (ticketCount >= 1) {
         {
+            // 使用智能指针加锁 这样不用 加锁和解锁
 //            lock_guard<mutex> lock(mtx);  // 加锁 类似于 scoped_ptr 建议用这个
             unique_lock<mutex> lock(mtx);  // 类似 unique_ptr
-            lock.lock();
-            if (ticketCount >= 1) {
+//            lock.lock() // 不用 lock
+            if (ticketCount >= 1) { // 双重判定
                 // 临界区代码段 => 原子操作 => 线程间互斥操作 => mutex
                 cout << "Window: " << index << " sells  No." << ticketCount << "ticket" << endl;
                 ticketCount--;
             }
-            lock.unlock();
+//            lock.unlock();
         }
         this_thread::sleep_for(chrono::milliseconds(100));
     }
