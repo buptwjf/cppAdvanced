@@ -41,6 +41,7 @@ public:
 };
 
 class CarLight {
+public:
     virtual void show() = 0;
 };
 
@@ -107,6 +108,8 @@ int main() {
 
     p1->show();
     p2->show();
-    
+    p4->show();
+    p5->show();
 
+    return 0;
 }
