@@ -39,15 +39,15 @@ void threadHandle1(int time) {
 
 int main() {
     // 创建一个新线程对象，传入一个线程函数，新线程就开始运行了
-    thread t1(threadHandle1, 2);
-    thread t2(threadHandle1, 3);
+    thread t1(threadHandle1, 3);
+    thread t2(threadHandle1, 6);
     // 主线程等待子线程结束，主线程往下运行
-    t1.join();
-    t2.join();
+//    t1.join();
+//    t2.join();
 // 将子线程设置为分离线程
 // 否则主线程运行完成，如果主线程发现还有未完成的子线程，主线程就会异常终止
-//    t1.detach();
-//    t2.detach();
+    t1.detach();
+    t2.detach();
     cout << "main thread down" << endl;
     return 0;
 }
