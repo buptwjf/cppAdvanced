@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="aliyun (681d11a3-09e9-40ff-b5a8-1137a844dbc8)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.kEePRTQeGa" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

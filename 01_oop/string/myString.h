@@ -22,8 +22,6 @@ public:
     // c_str 指针指向字符的字符串，C风格的字符串
     // 在函数没有改变 m_data
     const char *get_c_ctr() const { return m_data; }  // 返回 string 对象的指针
-
-//    const char *c_str() const { return m_data; }
 };
 
 # include <cstring>
@@ -34,9 +32,9 @@ String::String(const char *cstr)  // 构造函数
 {
     if (cstr) {
         m_data = new char[strlen(cstr) + 1];
-//        strcpy(m_data, cstr);
+        strcpy(m_data, cstr);
 // C++ 11 新标准
-        strcpy_s(m_data, cstr);
+//        strcpy_s(m_data, cstr);
     } else {
         m_data = new char[1];
         *m_data = '\0';
@@ -58,7 +56,8 @@ String &String::operator=(const String &str)  // 拷贝复制 需要传出引用
 
     delete[] m_data;  // 先删除左边；
     m_data = new char[strlen(str.m_data) + 1];
-    strcpy_s(m_data, str.m_data);
+    strcpy(m_data, str.m_data);
+//    strcpy_s(m_data, str.m_data);
     return *this;
 }
 
@@ -66,16 +65,17 @@ inline
 String::String(const String &str)  // 拷贝构造
 {
     m_data = new char[strlen(str.m_data) + 1];
-//    strcpy(m_data, str.m_data);
-    strcpy_s(m_data, str.m_data);
+    strcpy(m_data, str.m_data);
+//    strcpy_s(m_data, str.m_data); // C++11 新标准
 }
 
-
+// 没有用成员方法
 String GetString(String &str) {
     const char *pstr = str.get_c_ctr();
     String tmpStr(pstr);
     return tmpStr;
 }
+
 
 #include <iostream>
 

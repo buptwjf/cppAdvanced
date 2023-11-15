@@ -1,4 +1,4 @@
-#include "string.h"
+#include "myString1.h"
 #include <iostream>
 
 using namespace std;
@@ -14,5 +14,7 @@ int main()
   s3 = s1;
   cout << s3 << endl;     
   cout << s2 << endl;  
-  cout << s1 << endl;      
+  cout << s1 << endl;
+  String s4 = GetString(s1);
+  cout << s4 << endl;
 }
