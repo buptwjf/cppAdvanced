@@ -61,18 +61,22 @@ inline Vector<T>::Vector(int size) {
 template<typename T>
 inline Vector<T>::~Vector() {
     delete[] _first;
+    _first = nullptr;
+    _last = nullptr;
+    _end = nullptr;
 }
 
 // 注意需要深拷贝，重新开辟内存
 template<typename T>
 inline Vector<T>::Vector(const Vector<T> &vec) {
-    int size = vec._last - vec._first;
+    int len = vec._last - vec._first;
+    int size = vec._end - vec._first;
     _first = new T[size];
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < len; i++) {
         _first[i] = vec[i];
     }
-    _last = _first + size;
-    _end = _last;
+    _last = _first + len;
+    _end = _last + size;
 }
 
 // 注意：按引用传递；检查自赋值
@@ -81,13 +85,15 @@ inline Vector<T> &Vector<T>::operator=(const Vector<T> &vec) {
     // 检查自赋值
 //    if (_first != vec._first) { 不要通过起始指针来检查
     if (this != &vec) {
-        int size = vec._last - vec._first;
+        delete[] _first; // 先释放内存
+        int size = vec._end - vec._first;
         _first = new T[size];
-        for (int i = 0; i < size; i++) {
+        int len = vec._last - vec._first;
+        for (int i = 0; i < len; i++) {
             *(_first + i) = *(vec._first + i);
         }
-        _last = _first + size;
-        _end = _last;
+        _last = _first + len;
+        _end = _first + size;
         return *this;
     }
     return *this;
@@ -109,15 +115,14 @@ inline void Vector<T>::push_back(T elem) {
     if (full()) {
         expand();
     }
-    *_last = elem;
-    _last++;
+    *_last-- = elem;
 }
 
 // 注意判断容器是否为空
 template<typename T>
 inline void Vector<T>::pop_back() {
     if (!this->empty()) {
-        _last--;
+        --_last;
     } else {
         throw std::out_of_range("empty!");
     }
@@ -156,19 +161,18 @@ int Vector<T>::size() const {
 
 template<typename T>
 inline bool Vector<T>::full() const {
-    return _end == _last + 1;
+    return _end == _last;
 }
 
 // 注意二倍扩容
 template<typename T>
 inline void Vector<T>::expand() {
-    int size = _end - _first;
+    int size = _end - _first; // 原始容量
     T *temp = _first;
     _first = new T[2 * size];
     for (int i = 0; i < size; i++) {
         *(_first + i) = *(temp + i);
     }
-
     delete[] temp;
     _end = _first + 2 * size;
     _last = _first + size;
