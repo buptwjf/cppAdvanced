@@ -103,6 +103,7 @@ String GetString(String &str) { // 按引用传递
 //    return tmp;
 }
 
+// 这样好处是 左操作是如果不是 String 但是能变为 String，那么这样也能用
 String operator+(const String &lhs, const String &rhs) {
     String tmpStr;
     tmpStr.m_data = new char[strlen(lhs.get_c_ctr()) + strlen(rhs.get_c_ctr()) + 1];
