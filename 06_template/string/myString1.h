@@ -16,26 +16,25 @@ class String {
 private:
     char *m_data;
 public:
-    String(const char *cstr = nullptr);  // 构造函数（声明时候带默认，实现的时候就不带默认）
+    explicit String(const char *cstr = nullptr);  // 构造函数（声明时候带默认，实现的时候就不带默认）
     String(const String &str);  // 拷贝构造
     String &operator=(const String &str);  // 拷贝复制
     ~String();  // 析构函数
     // c_str 指针指向字符的字符串，C风格的字符串
     // 在函数没有改变 m_data
-    const char *get_c_ctr() const { return m_data; }  // 返回 string 对象的指针
+    [[nodiscard]] const char *get_c_ctr() const { return m_data; }  // 返回 string 对象的指针
 };
 
 # include <cstring>
 
 inline
 String::String(const char *cstr)  // 构造函数
-// String::String(const char* cstr = 0)  // 这里不能这么写，默认值不需要在这里写出来
 {
     if (cstr) {
         m_data = new char[strlen(cstr) + 1];
         strcpy(m_data, cstr);
-// C++ 11 新标准
-//        strcpy_s(m_data, cstr);
+        // C 11 新标准
+        // strcpy_s(m_data, cstr);
     } else {
         m_data = new char[1];
         *m_data = '\0';

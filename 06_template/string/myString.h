@@ -2,7 +2,7 @@
 #define __MYSTRING__
 
 /*
-     需求：定义 String 的对象   
+     需求：定义 String 的对象 ( 侯捷版本 )
      1.构造函数
      2.拷贝构造
      3.拷贝复制
@@ -81,6 +81,7 @@ String GetString(String &str) {
 
 using namespace std;
 
+// 注意这里不能写成 String 的成员函数
 inline
 ostream &operator<<(ostream &os, const String &str) {
     os << str.get_c_ctr();
