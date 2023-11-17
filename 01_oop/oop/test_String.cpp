@@ -6,19 +6,18 @@ using namespace std;
 
 int main() {
     String s1("aaaaa");
-    cout << "---------------" << endl;
+    cout << "------- 1 --------" << endl;
     String s2 = GetString(s1); // 在构造的时候，直接初始化
-    cout << "---------------" << endl;
+    cout << "------- 2 --------" << endl;
     cout << s2 << endl;
-    cout << "---------------" << endl;
+    cout << "------- 3 --------" << endl;
     String s3;
     s3 = String("bbbb"); // 右值引用的拷贝构造不一定会触发, 编译器可能会执行返回值优化（Return Value Optimization，RVO）
-    cout << "---------------" << endl;
+    cout << "------- 4 --------" << endl;
     String s4 = std::move(String("cccc")); // 不过不使用 move，现代编译器会帮我们优化，直接构造 String s4;
-    cout << "---------------" << endl;
+    cout << "------- 5 --------" << endl;
     String s5 = s3 + s4;
     cout << s5 << endl;
-    cout << "---------------" << endl;
     // 这里可能没有输出 String(String&&) 而是
     //    ---------------
     //    String(const char *cstr)
@@ -35,8 +34,9 @@ int main() {
     vector<String> vec;
 //    vec.push_back(s1);
     cout << "-------------------------" << endl;
-    vec.push_back(String("bbb"));
-//    vec.emplace_back("bbb");
+    // 由于 设定了右值引用的 拷贝构造，因此能达到和 emplace 一样实际只构造了一次 String
+    vec.push_back(String("bbb")); // String(const char *cstr) String(String&&)
+//    vec.emplace_back("bbb"); // String(const char *cstr)
     cout << " ************************************** " << endl;
     /*  String(const String&) 构造临时对象
         String(const char *cstr) 你哦默认构造

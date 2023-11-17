@@ -48,9 +48,11 @@ String::String(const char *cstr)  // 构造函数
 inline
 String::~String()  // 析构函数
 {
-    std::cout << "~String()" << std::endl;
-    delete[] m_data;
-    m_data = nullptr;
+    if(m_data){
+        std::cout << "~String()" << std::endl;
+        delete[] m_data;
+        m_data = nullptr;
+    }
 }
 
 inline
@@ -104,7 +106,7 @@ String GetString(String &str) { // 按引用传递
 }
 
 // 这样好处是 左操作是如果不是 String 但是能变为 String，那么这样也能用
-String operator+(const String &lhs, const String &rhs) {
+String operator+(const String &lhs, const String &rhs) { // 临时对象，必须按值返回
     String tmpStr;
     tmpStr.m_data = new char[strlen(lhs.get_c_ctr()) + strlen(rhs.get_c_ctr()) + 1];
     strcpy(tmpStr.m_data, lhs.get_c_ctr()); // 如果这里直接使用 m_data,用到了 String 的私有成员，就需要定义友元
