@@ -22,7 +22,7 @@ int main() {
     cout << imag(c1) << endl;
     cout << "------- 测试 += -= *= 运算符重载  -------" << endl;
     complex c2(-3, -2);
-    cout << (c += c1) << endl;  //??? 这里为啥要括号
+    cout << (c += c1) << endl;  // 这里为啥要括号 ? 因为 << 运算符的优先级大于 +=
     cout << (c -= c1) << endl;
     cout << (c1 *= c1) << endl;
     cout << (c2 += c2 += c2) << endl;  //(-12, -8)
@@ -31,8 +31,11 @@ int main() {
     cout << "------- 测试 + - * 运算符重载  -------" << endl;
     cout << (c1 + c2) << endl;
     cout << (c1 + c2 + c) << endl;
+    cout << "###############" << endl;
     cout << (c1 + 5.0) << endl;
     cout << (5.0 + c1) << endl;
+    cout << "###############" << endl;
+    cout << (c1 + 5.0) << endl;
     cout << (+c1) << endl;
     cout << "-------------------------------------" << endl;
     cout << (c1 - c2) << endl;

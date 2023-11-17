@@ -24,11 +24,14 @@
         7.3 const
 */
 
+#include <iostream>
+
 class complex {
-  public:
+public:
     // 构造函数，添加默认值
     complex(double r = 0, double i = 0) // pass by value 效率差不多
-        : re(r), im(i) {}               // 设置初值列
+            : re(r), im(i) {}               // 设置初值列
+//            : re(r), im(i) { std::cout << "complex" << std::endl;}               // 设置初值列
 
     // 返回 re, im 函数类型为 const  ???这里的const的位置
     // 设计为成员函数, 希望是 inline
@@ -43,7 +46,7 @@ class complex {
     complex &operator*=(const complex &);
     // complex& operator /= (const double);  不能进行 /=
 
-  private:
+private:
     // 定义 re, im 为私有
     double re, im;
     // 想直接取得 re 和 im
@@ -110,20 +113,24 @@ inline complex &complex::operator*=(const complex &r) {
         3. 应该定义在类外，因为左操作数会默认成类的对象，但实际上有可能不是
    (double)
 */
-inline complex // return by value
+inline complex // return by value 这里只能按值返回
 operator+(const complex &x, const complex &y) {
-    // 使用临时对象
-    return complex(real(x) + real(y), imag(x) + imag(y));
+    // 1. 使用临时对象，这样编译器会对返回的临时对象进行优化，避免生成临时对象
+    //    return complex(real(x) + real(y), imag(x) + imag(y));
+    // 2. 也可以使用 初始化列表 return 临时对象从语法层面上进行对象构造的优化
+    return {real(x) + real(y), imag(x) + imag(y)};
 }
+
 
 inline complex operator+(const complex &x, double y) // ???这里y可以用const
 {
+    std::cout << " operator+(const complex &x, double y) " << std::endl;
     return complex(real(x) + y, imag(x));
-} //??? 为什么没有这个也可以
+} //??? 为什么没有这个也可以，因为可以将 double -> complex 通过默认构造
 
 inline complex operator+(double x, const complex &y) {
     return complex(x + real(y), imag(y));
-} //??? 为什么没有这个也可以
+} //??? 为什么没有这个也可以, 因为double -> complex()
 
 inline complex operator+(const complex &x) {
     return x; // 取正
@@ -146,8 +153,7 @@ inline complex operator-(const complex &x) {
 }
 
 inline complex operator*(const complex &x, const complex &y) {
-    return complex(real(x) * real(y) - imag(x) * imag(y),
-                   real(x) * imag(y) + real(y) * imag(x));
+    return complex(real(x) * real(y) - imag(x) * imag(y), real(x) * imag(y) + real(y) * imag(x));
 }
 
 inline complex operator*(const complex &x, double y) {
@@ -200,6 +206,7 @@ inline double norm(const complex &x) {
 
 // 写成非成员函数, 因为希望左操作数为 cout
 using namespace std;
+
 ostream &operator<<(ostream &os, const complex &x) {
     return os << '(' << real(x) << ',' << imag(x) << ')';
 }
