@@ -67,5 +67,9 @@ int main() {
     cout << conj(c4) << endl;
     cout << "------------ 测试 norm --------------" << endl;
     cout << norm(c4) << endl;
+    cout << "------------ 测试 in --------------" << endl;
+    complex c6;
+    cin >> c6;
+    cout << c6 << endl;
     return 0;
 }

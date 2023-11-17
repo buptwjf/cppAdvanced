@@ -53,6 +53,7 @@ private:
     friend complex &__doapl(complex *ths, const complex &r);
     friend complex &__doami(complex *ths, const complex &r);
     friend complex &__doaml(complex *ths, const complex &r);
+    friend std::istream &operator>>(std::istream &in, complex &x);
 };
 
 // 获取 complex 对象的实部和虚部
@@ -105,6 +106,8 @@ inline complex &complex::operator*=(const complex &r) {
     return __doaml(this, r);
 }
 
+
+
 // 操作符 + -  重载
 /*
     注意：
@@ -112,6 +115,7 @@ inline complex &complex::operator*=(const complex &r) {
         2. 复数与实数的运算
         3. 应该定义在类外，因为左操作数会默认成类的对象，但实际上有可能不是
    (double)
+        4. 运算符重载会默认寻找成员函数中的运算符重载，接下来找全局函数函数的运算符重载
 */
 inline complex // return by value 这里只能按值返回
 operator+(const complex &x, const complex &y) {
@@ -205,10 +209,13 @@ inline double norm(const complex &x) {
 }
 
 // 写成非成员函数, 因为希望左操作数为 cout
-using namespace std;
-
-ostream &operator<<(ostream &os, const complex &x) {
+std::ostream &operator<<(std::ostream &os, const complex &x) {
     return os << '(' << real(x) << ',' << imag(x) << ')';
+}
+
+inline std::istream &operator>>(std::istream &in, complex &x) {
+    in >> x.re >> x.im;
+    return in;
 }
 
 #endif
