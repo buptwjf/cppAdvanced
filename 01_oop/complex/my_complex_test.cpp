@@ -28,6 +28,7 @@ int main() {
     cout << (c2 += c2 += c2) << endl;  //(-12, -8)
     cout << (c2 -= c2 -= c2) << endl;
     cout << (c2 *= c2 *= c2) << endl;
+    cout << (c2 += 2) << endl;
     cout << "------- 测试 + - * 运算符重载  -------" << endl;
     cout << (c1 + c2) << endl;
     cout << (c1 + c2 + c) << endl;

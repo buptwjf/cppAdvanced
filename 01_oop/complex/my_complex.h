@@ -33,8 +33,8 @@ class complex {
     // 返回 re, im 函数类型为 const  ???这里的const的位置
     // 设计为成员函数, 希望是 inline
     // 在函数中不会改变data, 用const
-    double real() const { return re; } // 成员函数有隐含的 this 指针
-    double imag() const { return im; }
+    [[nodiscard]] double real() const { return re; } // 成员函数有隐含的 this 指针
+    [[nodiscard]] double imag() const { return im; }
 
     // +=  -=  *=  /=  操作符重载
     // 设计为成员函数，因为左操作数都为对象
@@ -69,6 +69,15 @@ inline double imag(const complex &x) { return x.imag(); }
             2.2 可以访问对象中的所有成员。
         3. 返回值 by reference 不能 void
 */
+
+/*
+ * 下面这种写法比较好
+ * 由于 += 是全局函数，所以尽可能的封装好，减少因为 complex 成员变量的变化而改变
+ * 具体的实现则由全局函数 __doapl 处理。
+ * 非成员函数不会增加类的大小，而成员函数可能会增加类的大小。这在某些情况下可能是一个考虑因素。
+ * 非成员函数可以用作自由函数（不受任何类的限制）
+ * */
+
 inline complex &__doapl(complex *ths, const complex &r) {
     ths->re += r.re;
     ths->im += r.im;
@@ -107,8 +116,7 @@ inline complex &complex::operator*=(const complex &r) {
     注意：
         1. return by value
         2. 复数与实数的运算
-        3. 应该定义在类外，因为左操作数会默认成类的对象，但实际上有可能不是
-   (double)
+        3. 应该定义在类外，因为左操作数会默认成类的对象，但实际上有可能不是(double)
 */
 inline complex // return by value
 operator+(const complex &x, const complex &y) {

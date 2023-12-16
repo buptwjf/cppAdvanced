@@ -11,6 +11,7 @@
 class String {
 private:
     char *m_data;
+
     friend String operator+(const String &lhs, const String &rhs);
 
 public:
@@ -18,7 +19,7 @@ public:
     String(const String &str);  // 拷贝构造
     String(String &&str) noexcept; // 带右值引用的拷贝构造函数
     String &operator=(const String &str);  // 拷贝复制
-    String &operator=(String &&str) noexcept ; // 带右值引用的拷贝复制函数
+    String &operator=(String &&str) noexcept; // 带右值引用的拷贝复制函数
     ~String();  // 析构函数
     // c_str 指针指向字符的字符串，C风格的字符串
     // 在函数没有改变 m_data
