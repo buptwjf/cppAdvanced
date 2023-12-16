@@ -3,9 +3,8 @@
 /*
  * 根据施磊课程，优化对象
  * */
-
 /*
-     需求：定义 String 的对象   
+     需求：定义 String 的对象  最简单的striung 类型
      1.构造函数
      2.拷贝构造
      3.拷贝复制
@@ -36,6 +35,7 @@ String::String(const char *cstr)  // 构造函数
         // C 11 新标准
         // strcpy_s(m_data, cstr);
     } else {
+        // 如果是空 string
         m_data = new char[1];
         *m_data = '\0';
     }
@@ -44,13 +44,16 @@ String::String(const char *cstr)  // 构造函数
 inline
 String::~String()  // 析构函数
 {
+    // 释放空间
     delete[] m_data;
+    // 指针置空
     m_data = nullptr;
 }
 
 inline
 String &String::operator=(const String &str)  // 拷贝复制 需要传出引用
 {
+    // 第一步必须检查自赋值 ！
     if (this == &str)  //&str 表示取地址
         return *this;
 
