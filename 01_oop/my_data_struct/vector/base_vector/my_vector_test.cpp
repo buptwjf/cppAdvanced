@@ -5,7 +5,7 @@
 #include <iostream>
 
 /*
- * 测试增加 allocator 的 Vector
+ * 测试 Vector.h
 */
 using namespace std;
 
@@ -25,6 +25,7 @@ int main() {
     vec.push_back(6);
     cout << "vec empty: " << vec.empty() << endl;
     cout << "vec size: " << vec.size() << endl;
+    cout << "vec capacity: " << vec.capacity() << endl;
     vec.pop_back();
     cout << "vec size: " << vec.size() << endl;
 

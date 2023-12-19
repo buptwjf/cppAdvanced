@@ -15,7 +15,7 @@
 
 // 增加 Vector 的空间配置器，和标准库的 allocator 实现一样
 template<typename T>
-class Allocator {
+struct Allocator {
 public:
     T *allocate(size_t size) { // 负责开辟内存
         return (T *) malloc(sizeof(T) * size);
@@ -40,7 +40,7 @@ template<typename T, typename Alloc = Allocator<T>> // 指定默认的分配器
 class Vector {
 public:
     // 默认构造
-    explicit Vector(int size = 10, const Alloc &alloc = Alloc()) : _allocator(alloc) {
+    explicit Vector(int size = 2, const Alloc &alloc = Alloc()) : _allocator(alloc) {
 //    _first = new T[size]; 通过 allocator 开辟空间，而不是构造 size 个 T
         _first = _allocator.allocate(size);
         _last = _first;
@@ -50,8 +50,9 @@ public:
     // Vector 析构
     // 1. 析构对象 2. 释放 Vector 空间
     ~Vector() {
-        for (T *p = _first; p != _last; ++p) {
-            _allocator.destroy(p); // 只删除有效元素，析构对象
+        while (_last != _first) {
+            --_last;
+            _allocator.destroy(_last);
         }
         _allocator.deallocate(_first); // 释放堆上的数组内存
         _first = _last = _end = nullptr;

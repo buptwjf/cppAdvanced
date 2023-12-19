@@ -29,19 +29,28 @@
 template<typename T>
 class Vector {
 public:
-    explicit Vector(int size = 10); // 默认构造
+    explicit Vector(int size = 2); // 默认构造
     ~Vector(); // 析构
     Vector(const Vector<T> &vec); // 拷贝构造
     Vector &operator=(const Vector<T> &vec); // 拷贝复制
     T &operator[](int index) const; // []
     void push_back(T elem);
+
     void pop_back();
+
     T &back() const;
+
     T &begin() const;
+
     [[nodiscard]] bool empty() const;
+
     [[nodiscard]] int size() const;
+
+    [[nodiscard]] int capacity() const;
+
 protected:
     [[nodiscard]] bool full() const;
+
     void expand(); // 扩容
 private:
     T *_first; // 指向数组元素的起始位置
@@ -115,7 +124,7 @@ inline void Vector<T>::push_back(T elem) {
     if (full()) {
         expand();
     }
-    *_last-- = elem;
+    *(_last++) = elem;
 }
 
 // 注意判断容器是否为空
@@ -157,6 +166,11 @@ inline T &Vector<T>::back() const {
 template<typename T>
 int Vector<T>::size() const {
     return _last - _first;
+}
+
+template<typename T>
+int Vector<T>::capacity() const {
+    return _end - _first;
 }
 
 template<typename T>
