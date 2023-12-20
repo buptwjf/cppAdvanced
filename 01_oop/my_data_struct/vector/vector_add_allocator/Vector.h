@@ -2,7 +2,7 @@
 // Created by 86188 on 2023/11/15.
 //
 /*
- * 在之前基础 vector 的基础上，增加 allocator
+ * 在之前基础 base_vector 的基础上，增加 allocator
  * allocator 应该做四件事
  * 1. 内存开辟，内存释放
  * 2. 对象构造，对象析构
