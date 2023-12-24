@@ -21,5 +21,7 @@ int main() {
         cout << i << " ";
     }
     cout << endl;
+    // 增加 iterator 后不增加 vec 的内存
+    cout << "sizeof(v1): " << sizeof(v1) << endl; // 32
     return 0;
 }

@@ -4,8 +4,9 @@
 
 
 #include <iostream>
-//#include "Vector_base.h" // 没有空间配置器的版本
-#include "Vector.h" // 有空间配置器的版本
+#include "Vector_base.h" // 没有空间配置器的版本
+//#include "Vector.h" // 有空间配置器的版本
+
 using namespace std;
 
 class Test {
@@ -45,5 +46,8 @@ int main() {
     // 2. 有空间配置器: 一次 ~Test()
     vec.pop_back();
     cout << "------- 5 ------" << endl;
+    // base Vec 3*8 = 24
+    // add Allocator Vec 4*8 = 32
+    cout << "sizeof(vec): " << sizeof(vec) << endl;
     return 0;
 }
