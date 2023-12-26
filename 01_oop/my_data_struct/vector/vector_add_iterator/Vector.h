@@ -36,7 +36,6 @@ public:
 
 };
 
-
 template<typename T, typename Alloc = Allocator<T>> // 指定默认的分配器
 class Vector {
 public:
@@ -125,10 +124,13 @@ public:
         bool operator!=(const iterator &it) { return _ptr != it._ptr; }
 
         // 4. ++
-        iterator operator++() { return ++_ptr; }
+        iterator operator++() {
+            ++_ptr;
+            return *this;
+        }
 
         // 5. *
-        T operator*() { return *_ptr; }
+        T& operator*() { return *_ptr; }
 
     private:
         T *_ptr;
@@ -150,7 +152,6 @@ private:
     T *_end; // 指向数组空间的后继位置
     Alloc _allocator;
 };
-
 
 // 注意判断 index 的合法性
 template<typename T, typename Alloc>
@@ -200,7 +201,6 @@ inline T &Vector<T, Alloc>::back() const {
         throw std::out_of_range("empty!");
     }
 }
-
 
 // 使用分配器进行扩容
 // 3. 析构容器元素 4. 释放容器空间 1. 申请新的空间 2. 构造容器元素
