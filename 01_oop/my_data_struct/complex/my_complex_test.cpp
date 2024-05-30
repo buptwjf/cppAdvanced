@@ -33,8 +33,9 @@ int main() {
     cout << (c1 + c2) << endl;
     cout << (c1 + c2 + c) << endl;
     cout << "###############" << endl;
-    cout << (c1 + 5.0) << endl;
-    cout << (5.0 + c1) << endl;
+    cout << (c1 + 5.0) << endl; // operator+(const complex &x, double y)
+    cout << "###############" << endl;
+    cout << (5.0 + c1) << endl; // operator+(double x, const complex &y )
     cout << "###############" << endl;
     cout << (c1 + 5.0) << endl;
     cout << (+c1) << endl;
