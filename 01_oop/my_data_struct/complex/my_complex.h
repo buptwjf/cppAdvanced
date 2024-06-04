@@ -218,7 +218,10 @@ inline double norm(const complex &x) {
  * 这里用了两个不同的方式来处理 << 和 >>
  * 1. 对于 << 采用成员函数 real()的方式获取私有成员参数
  * 2. 对于 >> 采用友元函数的方式
- * */
+ *
+ * 为什么不都用 inline? inline 一般放在头文件中
+ * operator<< 没有使用 inline：因为它可能相对复杂，适合放在实现文件中，避免头文件膨胀。
+ * operator>> 使用了 inline：因为它简单且可能高频调用，适合内联以减少函数调用开销。 * */
 // 写成非成员函数, 因为希望左操作数为 cout
 std::ostream &operator<<(std::ostream &os, const complex &x) {
     return os << '(' << real(x) << ',' << imag(x) << ')';
