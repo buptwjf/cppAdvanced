@@ -33,5 +33,9 @@ int main() {
     cout << s7 << endl;
 
     cout << "s7.length(): " << s7.length() << endl;
+
+    String s8;
+    cin >> s8;
+    cout << "s8: " << s8 << endl;
     return 0;
 }

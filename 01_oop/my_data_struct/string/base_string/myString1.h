@@ -136,6 +136,10 @@ String operator+(const String &lhs, const String &rhs) {
     // String tmpStr(ptmp);
     // delete *ptmp
     // return tmpStr;
+    /*
+     * 方法二的缺点：
+     * 1. 当 new 失败后会导致内存泄露
+     * */
 }
 
 int String::length() {
@@ -166,4 +170,11 @@ inline std::ostream &operator<<(std::ostream &os, const String &str) {
     return os;
 }
 
+// 输入流函数
+inline std::istream &operator>>(std::istream &in, String &str) {
+    char buffer[1000]; // 使用临时缓冲区来读取输入
+    in >> buffer;
+    str = String(buffer); // 使用临时缓冲区构建新的字符串对象，并赋值给str
+    return in;
+}
 #endif
