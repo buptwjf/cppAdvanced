@@ -6,11 +6,11 @@ class Test {
 public:
     // Test() Test(10) Test(10, 10) 相当于三种构造函数
     Test(int a = 0, int b = 0) : ma(a), mb(b) {
-        cout << "Test()" << endl;
+        cout << "Test(): " << "ma = " << ma << "; mb = " << mb << endl;
     }
 
     ~Test() {
-        cout << "~Test" << endl;
+        cout << "~Test "  << "ma = " << ma << "; mb = " << mb<< endl;
     };
 
     Test(const Test &t) : ma(t.ma), mb(t.mb) {
@@ -30,6 +30,7 @@ private:
 };
 
 Test t1(10, 10); // 全局变量程序一开始就构造
+static Test t6(25, 25); // 全局变量程序一开始就构造
 
 int main() {
     cout << "1.------------------" << endl;
@@ -49,9 +50,9 @@ int main() {
 //    Test* p3 = &Test(80,80); // 错误！！ 临时对象出语句就会消失
     const Test &p4 = Test(70, 70); // 必须加 const 构造函数，直接构造
     delete p1; // 析构
-    delete[]p2; // 两次析构
+    delete[] p2; // 两次析构
     cout << "5.------------------" << endl;
     return 0;
 }
 
-Test t5(10, 10); // 全局变量程序一开始就会构造
+Test t5(15, 15); // 全局变量程序一开始就会构造
