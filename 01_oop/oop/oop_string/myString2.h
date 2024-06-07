@@ -31,34 +31,34 @@ public:
 #include <iostream>
 
 inline
-String::String(const char *cstr)  // 构造函数
 // String::String(const char* cstr = 0)  // 这里不能这么写，默认值不需要在这里写出来
-{
+// 构造函数
+String::String(const char *cstr) {
     std::cout << "String(const char *cstr)" << std::endl;
     if (cstr) {
         m_data = new char[strlen(cstr) + 1];
         strcpy(m_data, cstr);
-// C++ 11 新标准，更加安全的操作，可以避免内存不足
-//        strcpy_s(m_data, cstr);
+        // C++ 11 新标准，更加安全的操作，可以避免内存不足
+        // strcpy_s(m_data, cstr);
     } else {
         m_data = new char[1];
         *m_data = '\0';
     }
 }
 
+// 析构函数
 inline
-String::~String()  // 析构函数
-{
-    if(m_data){
-        std::cout << "~String()" << std::endl;
+String::~String() {
+    if (m_data) {
+        std::cout << "~String()" << m_data << std::endl;
         delete[] m_data;
         m_data = nullptr;
     }
 }
 
-inline
-String &String::operator=(const String &str)  // 拷贝复制 需要传出引用
-{
+// 拷贝复制
+// 需要传出引用
+inline String &String::operator=(const String &str) {
     std::cout << "operator=" << std::endl;
     if (this == &str)  //&str 表示取地址
         return *this;
@@ -66,32 +66,31 @@ String &String::operator=(const String &str)  // 拷贝复制 需要传出引用
     delete[] m_data;  // 先删除左边；
     m_data = new char[strlen(str.m_data) + 1];
     strcpy(m_data, str.m_data);
-//    strcpy_s(m_data, str.m_data);
+    // strcpy_s(m_data, str.m_data);
     return *this;
 }
 
-inline
-String &String::operator=(String &&str) noexcept  // 右值引用的拷贝复制 需要传出引用
-{
-    std::cout << "operator= &&" << std::endl;
-    if (this == &str)  //&str 表示取地址
-        return *this;
-
-    delete[] m_data;  // 先删除左边；
-    m_data = str.m_data;
-    str.m_data = nullptr;
-    return *this;
-}
-
-inline
-String::String(const String &str)  // 拷贝构造
-{
+// 拷贝构造
+inline String::String(const String &str) {
     std::cout << "String(const String&)" << std::endl;
     m_data = new char[strlen(str.m_data) + 1];
     strcpy(m_data, str.m_data);
 //    strcpy_s(m_data, str.m_data); // C++11 新标准
 }
 
+// 右值引用的拷贝复制
+inline String &String::operator=(String &&str) noexcept {
+    std::cout << "operator= &&" << std::endl;
+    if (this == &str)  //&str 表示取地址
+        return *this;
+
+    delete[] m_data;  // 先删除左边；
+    // 不需要重新开辟空间，直接转移所有权
+    m_data = str.m_data;
+    str.m_data = nullptr;
+    return *this;
+}
+// 右值引用的拷贝构造
 inline String::String(String &&str) noexcept {
     std::cout << "String(String&&)" << std::endl;
     m_data = str.m_data;
@@ -119,8 +118,7 @@ String operator+(const String &lhs, const String &rhs) { // 临时对象，必�
 
 using namespace std;
 
-inline
-ostream &operator<<(ostream &os, const String &str) {
+inline ostream &operator<<(ostream &os, const String &str) {
     os << str.get_c_ctr();
     return os;
 }
