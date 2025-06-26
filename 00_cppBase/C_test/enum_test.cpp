@@ -1,5 +1,6 @@
 #include <iostream>
 
+/* enum 的使用 */
 enum Color {
     RED,
     GREEN,
