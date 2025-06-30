@@ -34,7 +34,7 @@ public:
 //            : re(r), im(i) { std::cout << "complex" << std::endl;}               // 设置初值列
 
 
-    // 1. 设计为成员函数, 希望是 inline
+    // 1. 设计为成员函数 并 定义在class body 中, 希望是 inline
     // 2. 返回 re, im 函数类型为 double
     // 3. 在函数中不会改变data,这个函数应该是常函数 用const
     [[nodiscard]] double real() const { return re; }
@@ -49,7 +49,7 @@ public:
     // complex& operator /= (const double);  从虚数定义上不能进行 /=
 
     // 想直接取得 re 和 im
-    // 通过全局友元函数来辅助实现 += -= *= 操作
+    // 通过全局友元函数来辅助实现 += -= *= 操作，高内聚 低耦合
     friend complex &__doapl(complex *ths, const complex &r);
     friend complex &__doami(complex *ths, const complex &r);
     friend complex &__doaml(complex *ths, const complex &r);
